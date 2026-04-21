@@ -1,0 +1,29 @@
+{
+  "name": "w-dop-200-lyn-2-1-jeux_videops-9",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/EpitechWebAcademiePromo2027/W-DOP-200-LYN-2-1-jeux_videops-9#readme",
+  "bugs": {
+    "url": "https://github.com/EpitechWebAcademiePromo2027/W-DOP-200-LYN-2-1-jeux_videops-9/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EpitechWebAcademiePromo2027/W-DOP-200-LYN-2-1-jeux_videops-9.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mocha:test": "mocha bootstrap-app/bootstrap/tests",
+    "mocha:testspaceword": "mocha spaceword/test/test.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "cypress": "^15.13.1",
+    "eslint": "^10.2.0",
+    "eslint-config-google": "^0.14.0",
+    "globals": "^17.5.0"
+  }
+}

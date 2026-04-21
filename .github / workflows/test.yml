@@ -1,0 +1,27 @@
+name: Monpremier workflow
+on: [push]
+jobs:
+  mon_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+      - name: "Setup Node"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: "Installer les dépendances"
+        run: npm install
+        working-directory: bootstrap-app/bootstrap
+      - name: "mocha tests"
+        run: npm run mocha:test
+        working-directory: bootstrap-app/bootstrap
+      - name: "Eslint tests"
+        run: npm run eslint:check
+        working-directory: bootstrap-app/bootstrap
+      - name: "Dire bonjour"
+        run: echo "Bonjour, je suis un workflow Github Actions !"
+
+      - name: "Lister les fichiers du projet"
+        run: ls
+        working-directory: bootstrap-app/bootstrap

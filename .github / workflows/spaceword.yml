@@ -1,0 +1,46 @@
+name: SpaceWord - CI
+
+on:
+  push:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Setup Node"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: "Installer les dépendances"
+        run: npm install
+        working-directory: spaceword
+
+      - name: "Linter ESLint"
+        run: npm run eslint:check
+        working-directory: spaceword
+
+      - name: "Tests unitaires Mocha"
+        run: npm run mocha:testspaceword
+        working-directory: spaceword
+
+      - name: "Audit des dépendances"
+        run: npm audit --audit-level=critical --omit=dev
+        working-directory: spaceword
+
+      - name: "Tests fonctionnels Cypress"
+        run: npm run cypress:testspaceword
+        working-directory: spaceword
+
+      - name: "Résumé CI"
+        if: always()
+        run: |
+          echo "## SpaceWord - Résultats CI" >> $GITHUB_STEP_SUMMARY
+          echo "::notice::Pipeline terminée - statut : ${{ job.status }}"

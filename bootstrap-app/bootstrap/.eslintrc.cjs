@@ -1,0 +1,19 @@
+module.exports = {
+  env: {
+    browser: true,
+    commonjs: true,
+    es2021: true,
+  },
+  extends: "google",
+  parserOptions: {
+    ecmaVersion: "latest",
+  },
+  rules: {
+       "no-var": "off",
+    "camelcase": "off",
+    "object-curly-spacing": "off",
+    "arrow-parens": "off",
+    "one-var": "off",
+    "indent": "off"
+  },
+};

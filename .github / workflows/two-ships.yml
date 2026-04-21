@@ -1,0 +1,61 @@
+name: Two Ships Passing - CI
+
+on:
+  push:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Setup Node"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: "Installer les dépendances"
+        run: npm install
+        working-directory: two-ships-passing
+
+      - name: "Linter ESLint"
+        run: npm run eslint:check
+        working-directory: two-ships-passing
+
+      - name: "Tests unitaires Mocha"
+        run: npm run mocha:test
+        working-directory: two-ships-passing
+      - name: "annotation echec tests unitaires"
+        if: failure()
+        run: echo "::error::Tests unitaires échoués"
+
+      - name: "Audit des dépendances"
+        run: npm audit --audit-level=critical --omit=dev
+        working-directory: two-ships-passing
+
+
+      - name: "Build"
+        run: npm run build
+        working-directory: two-ships-passing
+
+      - name: "Tests fonctionnels Cypress"
+        run: npm run cypress:test
+        working-directory: two-ships-passing
+      - name: "annotation echec tests fonctionnels"
+        if: failure()  
+        run: echo "::error::Tests fonctionnels échoués"
+
+
+      - name: "Résumé CI"
+        if: always()
+        run: |
+          echo "## Résultats CI" >> $GITHUB_STEP_SUMMARY
+          echo "::notice::Pipeline terminée - statut : ${{ job.status }}"
+
+        
+      
